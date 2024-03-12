@@ -176,7 +176,7 @@ namespace EFCore.Controllers
                 return NotFound($"Customer Id {id} not exists ");
             }
 
-            customerRepository.Remove(customer);
+            await customerRepository.Remove(customer);
             return Ok("Customer Removed successfully");
         }
     }
