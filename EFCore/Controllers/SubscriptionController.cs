@@ -19,7 +19,7 @@ namespace EFCore.Controllers
             this.subscriptionRepository = subscriptionRepository;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<SubscriptionDto>>> GetAllSubscriptions()
         {
             var subscriptions =await subscriptionRepository.GetAll();
