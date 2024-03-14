@@ -96,8 +96,9 @@ namespace EFCore.Controllers
                 return NotFound($"Computer Id {id} not exists ");
             }
 
-            var entity = mapper.Map<Computer>(ComputerDto);
-            await computerRepository.Update(entity);
+            mapper.Map(ComputerDto, ComputerToUpdate);
+
+            await computerRepository.Update(ComputerToUpdate);
 
             return Ok("Computer Updated successfully");
 

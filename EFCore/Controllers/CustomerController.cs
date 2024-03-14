@@ -87,7 +87,7 @@ namespace EFCore.Controllers
             {
                 return NotFound($"Customer Id {id} not exists ");
             }
-           
+
             var entity = mapper.Map<CustomerWithSubscriptionsDto>(customer);
             return Ok(entity);
         }
@@ -122,8 +122,8 @@ namespace EFCore.Controllers
             //    }
             //    customerRepository.SaveChanges();
             //}
-            var entity = mapper.Map<Customer>(customerDto);
-            await customerRepository.Update(entity);
+            mapper.Map(customerDto, customerToUpdate);
+            await customerRepository.Update(customerToUpdate);
 
             return Ok("Customer Updated successfully");
         }
