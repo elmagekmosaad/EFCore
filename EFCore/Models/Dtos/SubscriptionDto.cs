@@ -1,6 +1,6 @@
 ﻿using EFCore.Data.Enums;
 
-namespace EFCore.MySQL.Models.DTO
+namespace EFCore.MySQL.Models.Dto
 {
     public class SubscriptionDto
     {

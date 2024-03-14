@@ -95,7 +95,7 @@ namespace EFCore.MySQL.Data
             modelBuilder.Entity<Subscription>()
                 .Property(b => b.StartOfSubscription)
                 .IsRequired()
-                .HasDefaultValue(DateTime.Now.ToShortDateString());
+                .HasDefaultValue(DateTime.Now.ToLocalTime());
 
             modelBuilder.Entity<Subscription>()
                 .Property(b => b.EndOfSubscription)

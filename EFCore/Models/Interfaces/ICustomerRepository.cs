@@ -1,6 +1,6 @@
 ﻿using EFCore.Data.Enums;
 using EFCore.Data.Models;
-using EFCore.MySQL.Models.DTO;
+using EFCore.MySQL.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.Models.Interfaces

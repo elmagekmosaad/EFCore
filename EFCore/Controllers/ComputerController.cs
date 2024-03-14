@@ -1,8 +1,7 @@
-﻿using EFCore.Data.Models;
+﻿using AutoMapper;
+using EFCore.Data.Models;
 using EFCore.Models.Interfaces;
-using EFCore.Models.Repository;
-using EFCore.MySQL.Models.DTO;
-using Microsoft.AspNetCore.Http;
+using EFCore.MySQL.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EFCore.Controllers
@@ -12,32 +11,29 @@ namespace EFCore.Controllers
     public class ComputerController : ControllerBase
     {
         private readonly IComputerRepository computerRepository;
-        public ComputerController(IComputerRepository computerRepository)
+        private readonly IMapper mapper;
+
+        public ComputerController(IComputerRepository computerRepository,IMapper mapper)
         {
             this.computerRepository = computerRepository;
+            this.mapper = mapper;
         }
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<ComputerDto>>> GetAllComputers()
         {
             var computers = await computerRepository.GetAll();
-            return Ok(computers);
+            var data = mapper.Map<IEnumerable<ComputerDto>>(computers);
+
+            return Ok(data);
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Create(ComputerDto ComputerDTO)
+        public async Task<IActionResult> Create(ComputerDto ComputerDto)
         {
             if (ModelState.IsValid)
             {
-                var Computer = new Computer
-                {
-                    Id = ComputerDTO.Id,
-                    Hwid = ComputerDTO.Hwid,
-                    Serial = ComputerDTO.Serial,
-                    SubscriptionId = ComputerDTO.SubscriptionId,
-                    CustomerId = ComputerDTO.CustomerId
-                };
-
-                await computerRepository.Add(Computer);
+                var entity = mapper.Map<Computer>(ComputerDto);
+                await computerRepository.Add(entity);
 
                 return Ok("Computer added successfully");
             }
@@ -57,20 +53,20 @@ namespace EFCore.Controllers
             {
                 return NotFound($"Computer Id {ComputerId} not exists ");
             }
-
-            return Ok(Computer);
+            var entity = mapper.Map<ComputerDto>(Computer);
+            return Ok(entity);
         }
         [HttpGet("[action]/{subscriptionId}")]
         public async Task<IActionResult> ReadBySubscriptionId(int subscriptionId)
         {
-            var Computers = await computerRepository.GetBySubscriptionId(subscriptionId);
+            var Computer = await computerRepository.GetBySubscriptionId(subscriptionId);
 
-            if (Computers is null)
+            if (Computer is null)
             {
-                return NotFound($"Computers With subscriptionId {subscriptionId} not exists ");
+                return NotFound($"Computer With subscriptionId {subscriptionId} not exists ");
             }
-
-            return Ok(Computers);
+            var entity = mapper.Map<ComputerDto>(Computer);
+            return Ok(entity);
         }
         [HttpGet("[action]/{customerId}")]
         public async Task<IActionResult> ReadByCustomerId(int customerId)
@@ -81,14 +77,14 @@ namespace EFCore.Controllers
             {
                 return NotFound($"Computers With customerId {customerId} not exists ");
             }
-
-            return Ok(Computers);
+            var entities = mapper.Map<IEnumerable<ComputerDto>>(Computers);
+            return Ok(entities);
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> Update(int id, ComputerDto ComputerDTO)
+        public async Task<IActionResult> Update(int id, ComputerDto ComputerDto)
         {
-            if (ComputerDTO is null)
+            if (ComputerDto is null)
             {
                 return BadRequest("Computer is null");
             }
@@ -100,11 +96,8 @@ namespace EFCore.Controllers
                 return NotFound($"Computer Id {id} not exists ");
             }
 
-            ComputerToUpdate.Hwid = ComputerDTO.Hwid;
-            ComputerToUpdate.Serial = ComputerDTO.Serial;
-            ComputerToUpdate.SubscriptionId = ComputerDTO.SubscriptionId;
-
-            await computerRepository.Update(ComputerToUpdate);
+            var entity = mapper.Map<Computer>(ComputerDto);
+            await computerRepository.Update(entity);
 
             return Ok("Computer Updated successfully");
 

@@ -2,7 +2,7 @@
 using EFCore.Data.Models;
 using EFCore.Models.Interfaces;
 using EFCore.MySQL.Data;
-using EFCore.MySQL.Models.DTO;
+using EFCore.MySQL.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

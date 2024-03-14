@@ -1,3 +1,4 @@
+using EFCore.AutoMapper;
 using EFCore.Models.Interfaces;
 using EFCore.Models.Repository;
 using EFCore.MySQL.Data;
@@ -14,13 +15,13 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IComputerRepository, ComputerRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 var localMysql = builder.Configuration.GetConnectionString("localMysql");
 builder.Services.AddDbContext<MgDbContext>(options => options.UseMySql(localMysql, ServerVersion.AutoDetect(localMysql)));
 
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 var app = builder.Build();
