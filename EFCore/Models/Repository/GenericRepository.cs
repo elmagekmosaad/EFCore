@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    protected readonly MgDbContext _dbcontext = null;
+    protected readonly ApplicationDbContext _dbcontext = null;
     protected readonly DbSet<T> table = null;
     
-    public GenericRepository(MgDbContext dbcontext)
+    public GenericRepository(ApplicationDbContext dbcontext)
     {
         _dbcontext = dbcontext;
         table = _dbcontext.Set<T>();

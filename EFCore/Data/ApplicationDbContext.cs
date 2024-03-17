@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.MySQL.Data
 {
-    public class MgDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public MgDbContext()
+        public ApplicationDbContext()
         {
         }
-        public MgDbContext(DbContextOptions<MgDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 

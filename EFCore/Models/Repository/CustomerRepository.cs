@@ -12,7 +12,7 @@ namespace EFCore.Models.Repository
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
 
-        public CustomerRepository(MgDbContext dbcontext) : base(dbcontext)
+        public CustomerRepository(ApplicationDbContext dbcontext) : base(dbcontext)
         {
         }
 

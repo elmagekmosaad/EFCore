@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.Migrations
 {
-    [DbContext(typeof(MgDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240312144233_Initial")]
     partial class Initial
     {

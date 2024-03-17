@@ -19,7 +19,7 @@ builder.Services.AddScoped<IComputerRepository, ComputerRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
 var localMysql = builder.Configuration.GetConnectionString("localMysql");
-builder.Services.AddDbContext<MgDbContext>(options => options.UseMySql(localMysql, ServerVersion.AutoDetect(localMysql)));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(localMysql, ServerVersion.AutoDetect(localMysql)));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

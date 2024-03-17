@@ -6,7 +6,7 @@ namespace EFCore.Models.Repository
 {
     public class SubscriptionRepository : GenericRepository<Subscription>, ISubscriptionRepository
     {
-        public SubscriptionRepository(MgDbContext dbcontext) : base(dbcontext)
+        public SubscriptionRepository(ApplicationDbContext dbcontext) : base(dbcontext)
         {
         }
 

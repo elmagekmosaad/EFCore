@@ -6,7 +6,7 @@ namespace EFCore.Models.Repository
 {
     public class ComputerRepository : GenericRepository<Computer>, IComputerRepository
     {
-        public ComputerRepository(MgDbContext dbcontext) : base(dbcontext)
+        public ComputerRepository(ApplicationDbContext dbcontext) : base(dbcontext)
         {
         }
 
