@@ -1,13 +1,19 @@
 ﻿using AutoMapper;
+using Web.Api.Authorization.Filter;
 using EFCore.Data.Models;
-using EFCore.Models.Interfaces;
+using EFCore.Models.Repository.Interfaces;
 using EFCore.MySQL.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Web.Api.Constants;
 
 namespace EFCore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(policy: Policies.SuperAdmin)]
+    //[Authorize(policy: Policies.Admin)]
+    //[Authorize(policy: Policies.Customer)]
+    [AuthorizeOnAnyOnePolicy($"{Policies.SuperAdmin}, {Policies.Admin}, {Policies.Customer}")]
     public class SubscriptionController : ControllerBase
     {
         private readonly ISubscriptionRepository subscriptionRepository;
@@ -45,7 +51,7 @@ namespace EFCore.Controllers
         }
 
         [HttpGet("[action]/{subscriptionId}")]
-        public async Task<IActionResult> Read(int subscriptionId)
+        public async Task<IActionResult> Read(string subscriptionId)
         {
             var subscription = await subscriptionRepository.GetById(subscriptionId);
 
@@ -72,7 +78,7 @@ namespace EFCore.Controllers
         }
 
         [HttpPut("[action]")]
-        public async Task<IActionResult> Update(int id,SubscriptionDto subscriptionDto)
+        public async Task<IActionResult> Update(string id,SubscriptionDto subscriptionDto)
         {
             if (subscriptionDto is null)
             {
@@ -94,7 +100,7 @@ namespace EFCore.Controllers
 
         }
         [HttpDelete("[action]/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var subscription = await subscriptionRepository.GetById(id);
 

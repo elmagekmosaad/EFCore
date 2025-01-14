@@ -1,0 +1,31 @@
+[
+  {
+    "Name": "Web",
+    "Projects": []
+  },
+  {
+    "Name": "All",
+    "Projects": [
+      {
+        "Name": "EFCore\\Web.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Name": "WebApplication2\\WebApplication2.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  },
+  {
+    "Name": "Api",
+    "Projects": [
+      {
+        "Name": "EFCore\\Web.Api.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]

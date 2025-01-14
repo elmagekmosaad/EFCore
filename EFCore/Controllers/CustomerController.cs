@@ -1,17 +1,21 @@
 ﻿using EFCore.Data.Models;
 using EFCore.MySQL.Models.Dto;
-using EFCore.Data.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EFCore.Models.Interfaces;
 using AutoMapper;
-using EFCore.Models.Repository;
 using EFCore.Models.Dtos;
+using EFCore.Models.Repository.Interfaces;
+using Web.Api.Authorization.Filter;
+using Web.Api.Constants;
+using Web.Api.Data.Entities.Enums;
 
 namespace EFCore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(policy: Policies.SuperAdmin)]
+    //[Authorize(policy: Policies.Admin)]
+    //[Authorize(policy: Policies.Customer)]
+    [AuthorizeOnAnyOnePolicy($"{Policies.SuperAdmin}, {Policies.Admin}, {Policies.Customer}")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerRepository customerRepository;
@@ -22,7 +26,8 @@ namespace EFCore.Controllers
             this.customerRepository = customerRepository;
             this.mapper = mapper;
         }
-
+        //[Authorize(Roles = "User,Admin")]
+        //[Authorize(policy: Policies.Admin, Roles = $"{Roles.Admin},{Roles.Customer}")]
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomers()
         {
@@ -31,15 +36,16 @@ namespace EFCore.Controllers
 
             return Ok(data);
         }
+        //[Authorize(Roles = $"{Roles.Admin},{Roles.Customer}")]
         [HttpGet("GetAllWithSubscriptions")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAllCustomersWithSubscriptions()
+        public async Task<ActionResult<IEnumerable<CustomerWithSubscriptionsDto>>> GetAllCustomersWithSubscriptions()
         {
             var customers = await customerRepository.GetAllCustomersWithSubscriptions();
-            var entities = mapper.Map<IEnumerable<CustomerDto>>(customers);
+            var entities = mapper.Map<IEnumerable<CustomerWithSubscriptionsDto>>(customers);
             return Ok(entities);
         }
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetByGender(Gender gender)
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetByGender(CustomerGender gender)
         {
             var customers = await customerRepository.GetByGender(gender);
             var entities = mapper.Map<IEnumerable<CustomerDto>>(customers);
@@ -56,7 +62,7 @@ namespace EFCore.Controllers
 
             if (ModelState.IsValid)
             {
-                var entity = mapper.Map<Customer>(customerDto);
+                var entity = mapper.Map<AppUser>(customerDto);
                 await customerRepository.Add(entity);
 
                 return Ok("Customer added successfully");
@@ -68,7 +74,7 @@ namespace EFCore.Controllers
         }
 
         [HttpGet("[action]/{id}")]
-        public async Task<IActionResult> Read(int id)
+        public async Task<IActionResult> Read(string id)
         {
             var customer = await customerRepository.GetById(id);
 
@@ -128,7 +134,7 @@ namespace EFCore.Controllers
             return Ok("Customer Updated successfully");
         }
         [HttpDelete("[action]/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var customer = await customerRepository.GetById(id);
 

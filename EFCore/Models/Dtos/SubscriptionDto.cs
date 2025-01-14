@@ -1,4 +1,4 @@
-﻿using EFCore.Data.Enums;
+﻿using Web.Api.Data.Entities.Enums;
 
 namespace EFCore.MySQL.Models.Dto
 {

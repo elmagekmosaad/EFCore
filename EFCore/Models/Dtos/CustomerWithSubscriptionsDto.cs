@@ -5,7 +5,7 @@ namespace EFCore.Models.Dtos
 {
     public class CustomerWithSubscriptionsDto:CustomerDto
     {
-        public ICollection<Subscription> Subscriptions { get; set; }
+        public ICollection<SubscriptionDto> Subscriptions { get; set; }
 
     }
 }

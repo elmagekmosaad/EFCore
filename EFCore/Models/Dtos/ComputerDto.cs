@@ -1,6 +1,5 @@
-﻿using EFCore.Data.Enums;
-
-namespace EFCore.MySQL.Models.Dto
+﻿
+namespace EFCore.Models.Dtos
 {
     public class ComputerDto
     {

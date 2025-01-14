@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using EFCore.Data.Models;
 using EFCore.Models.Dtos;
+using EFCore.Models.Dtos.Auth;
 using EFCore.MySQL.Models.Dto;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Web.Api.Constants;
 
 namespace EFCore.AutoMapper
 {
@@ -12,12 +13,21 @@ namespace EFCore.AutoMapper
         {
             CreateMap<Computer, ComputerDto>()
                 .ReverseMap();
-            CreateMap<Customer, CustomerDto>()
+            CreateMap<AppUser, CustomerDto>()
                 .ReverseMap();
-            CreateMap<Customer, CustomerWithSubscriptionsDto>()
+            CreateMap<AppUser, CustomerWithSubscriptionsDto>()
                 .ReverseMap();
             CreateMap<Subscription, SubscriptionDto>()
                 .ReverseMap();
+            CreateMap<AppUser, RegisterDto>()
+               .ReverseMap();
+            
+            CreateMap<AppUser, DefaultSuperAdmin> ()
+               .ReverseMap();
+             CreateMap<AppUser, DefaultAdmin> ()
+               .ReverseMap();
+             CreateMap<AppUser, DefaultCustomer> ()
+               .ReverseMap();
 
         }
     }
